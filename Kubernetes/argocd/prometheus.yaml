@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/prometheus-community/helm-charts.git
+    targetRevision: HEAD
+    path: charts/kube-prometheus-stack
+    helm:
+      values: |
+        prometheus:
+          service:
+            type: NodePort
+        alertmanager:
+          service:
+            type: NodePort
+        grafana:
+          service:
+            type: NodePort
+        kube-state-metrics:
+          service:
+            type: NodePort
+        node-exporter:
+          service:
+            type: NodePort
+        prometheus-node-exporter:
+          service:
+            type: NodePort
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prometheus
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+    - Validate=false
+    - PrunePropagationPolicy=foreground
+    - RespectIgnoreDifferences=true
+    - Replace=false
+    - ApplyOutOfSyncOnly=true
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpine
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: alpine
+  template:
+    metadata:
+      labels:
+        app: alpine
+    spec:
+      containers:
+      - name: my-app-container
+        image: alpine:latest
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo 'Hello, World!'; sleep 360; done"]
+        ports:
+        - containerPort: 8888

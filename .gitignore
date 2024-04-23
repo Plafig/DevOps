@@ -1,0 +1,5 @@
+.terraform/
+Kubernetes/argocd-windows-amd64.exe
+Kubernetes/argocd.exe
+Kubernetes/argocd/argocd.exe
+prod-417218-bd739574b922.json

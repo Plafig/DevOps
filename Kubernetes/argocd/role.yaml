@@ -1,0 +1,9 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prom-read-role
+  namespace: nginx
+rules:
+  - apiGroups: [""]  # Core API group
+    resources: ["services", "endpoints"]
+    verbs: ["get", "list", "watch"]
